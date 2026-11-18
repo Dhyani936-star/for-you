@@ -1,0 +1,680 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Something For You 💗</title>
+
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --pink: #ff8eaf;
+    --darkpink: #e94e83;
+    --light: #fff0f5;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: var(--light);
+    color: #71364c;
+    overflow-x: hidden;
+}
+
+.page {
+    display: none;
+    min-height: 100vh;
+    padding: 35px 18px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.page.active {
+    display: flex;
+    animation: fadeIn .7s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(12px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+h1, h2 {
+    font-family: 'Pacifico', cursive;
+}
+
+.main-card {
+    background: rgba(255,255,255,.9);
+    border-radius: 28px;
+    padding: 35px 25px;
+    width: 100%;
+    max-width: 540px;
+    box-shadow: 0 12px 40px rgba(220,100,140,.16);
+    position: relative;
+    z-index: 2;
+}
+
+.heading {
+    color: var(--darkpink);
+    font-size: clamp(27px, 6vw, 38px);
+    margin-bottom: 18px;
+}
+
+.subtitle {
+    font-size: 15px;
+    line-height: 1.9;
+    color: #936477;
+}
+
+.cute-face {
+    font-size: 95px;
+    margin: 8px 0 18px;
+    animation: bob 2s infinite ease-in-out;
+}
+
+@keyframes bob {
+    50% {transform: translateY(-9px);}
+}
+
+.btn-love {
+    border: none;
+    background: var(--darkpink);
+    color: white;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-weight: 600;
+    margin: 8px;
+    transition: .2s;
+}
+
+.btn-love:hover {
+    background: #cf376c;
+    color: white;
+    transform: scale(1.06);
+}
+
+.btn-no {
+    background: #eee;
+    color: #80576a;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 30px;
+    margin: 8px;
+    transition: .15s;
+    z-index: 10;
+}
+
+.button-area {
+    min-height: 100px;
+    position: relative;
+}
+
+.heart {
+    color: #ff5c91;
+    animation: heartbeat 1s infinite;
+    display: inline-block;
+}
+
+@keyframes heartbeat {
+    50% {transform: scale(1.22);}
+}
+
+/* Page 3 */
+.coupon {
+    background: #fff4f7;
+    border: 2px dashed #ff9dbb;
+    padding: 20px;
+    border-radius: 18px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.coupon:hover {
+    transform: translateY(-4px);
+    background: #ffe6ef;
+}
+
+.coupon.redeemed {
+    background: #ffe0eb;
+    opacity: .75;
+    border-style: solid;
+}
+
+.reason {
+    background: #fff2f6;
+    border-radius: 16px;
+    padding: 17px;
+    margin: 12px 0;
+    display: none;
+    animation: fadeIn .5s ease;
+}
+
+/* Page 4: four rows of I love you */
+.love-background {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    transform: rotate(-5deg);
+}
+
+.love-row {
+    white-space: nowrap;
+    font-size: clamp(11px, 2vw, 16px);
+    letter-spacing: 2px;
+    color: #e8799e;
+    opacity: .65;
+    overflow: hidden;
+}
+
+.love-row:nth-child(even) {
+    transform: translateX(-60px);
+}
+
+.love-row span {
+    display: inline-block;
+    animation: scrollText 24s linear infinite;
+}
+
+.love-row:nth-child(even) span {
+    animation-direction: reverse;
+}
+
+@keyframes scrollText {
+    from {transform: translateX(0);}
+    to {transform: translateX(-50%);}
+}
+
+.page-four-content {
+    position: absolute;
+    z-index: 2;
+    background: rgba(255,255,255,.88);
+    padding: 28px;
+    border-radius: 25px;
+    width: min(90%, 450px);
+    box-shadow: 0 8px 30px #e9a3ba55;
+}
+
+/* Page 5: animated heart */
+#heartCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.final-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 550px;
+    padding: 20px;
+}
+
+#heartMessage {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: 1.5s ease;
+    background: rgba(255,255,255,.82);
+    border-radius: 22px;
+    padding: 22px;
+    margin-top: 15px;
+}
+
+#heartMessage.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.small-text {
+    font-size: 13px;
+    color: #a56b80;
+}
+
+@media(max-width: 480px) {
+    .main-card {padding: 27px 18px;}
+    .cute-face {font-size: 80px;}
+    .love-background {gap: 36px;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1: APOLOGY -->
+<section class="page active" id="page1">
+    <div class="main-card">
+        <div class="cute-face">🥺🧸</div>
+        <h1 class="heading" id="question">
+            Are you still angry with me?
+        </h1>
+
+        <p class="subtitle">
+            I know I made you upset.....
+            <br>
+            Can I please have one more chance to make you smile?
+            <br>
+            Pretty please? 🥹💗
+        </p>
+
+        <div class="button-area" id="buttonArea">
+            <button class="btn-love" onclick="sayYes()">
+                YES 💗
+            </button>
+
+            <button class="btn-no" id="noButton"
+                    onmouseenter="runAway()"
+                    onclick="runAway()"
+                    ontouchstart="runAway()">
+                NO 😒
+            </button>
+        </div>
+
+        <p class="small-text">Made with lots of love ❤️</p>
+    </div>
+</section>
+
+
+<!-- PAGE 2: CELEBRATION -->
+<section class="page" id="page2">
+    <div class="main-card">
+        <div class="cute-face">🥹💗</div>
+
+        <h1 class="heading">
+            YAYYYYYYYYY!
+        </h1>
+
+        <h2 style="color:#f078a0; font-size:27px;">
+            YOU SAID YESSSS!
+        </h2>
+
+        <p class="subtitle">
+            I knew you couldn't stay angry with me forever hehe.
+            <br>
+            Thank you for giving me another chance.
+            <br>
+            I love you sooooo much baby!
+        </p>
+
+        <div style="font-size:35px; margin:15px;">
+            💗 💕 💖 💞 💗
+        </div>
+
+        <button class="btn-love" onclick="showPage(3)">
+            Enter your Happy Zone 🎁
+        </button>
+    </div>
+</section>
+
+
+<!-- PAGE 3: HAPPY ZONE -->
+<section class="page" id="page3">
+    <div class="main-card">
+        <div class="cute-face">🎀🐻</div>
+
+        <h1 class="heading">Your Happy Zone!</h1>
+
+        <p class="subtitle">
+            A little place filled with all the love you deserve.
+        </p>
+
+        <h2 style="font-size:23px; color:#e76d96;">
+            🎟️ Your Love Coupons
+        </h2>
+
+        <div class="coupon" onclick="redeem(this)">
+            💋 One unlimited kisses coupon
+            <div class="small-text">Tap to redeem</div>
+        </div>
+
+        <div class="coupon" onclick="redeem(this)">
+            🫂 One extra-long hug
+            <div class="small-text">Tap to redeem</div>
+        </div>
+
+        <div class="coupon" onclick="redeem(this)">
+            🍫 Your favourite treat
+            <div class="small-text">Tap to redeem</div>
+        </div>
+
+        <div class="coupon" onclick="redeem(this)">
+            🥰 One full day of pampering
+            <div class="small-text">Tap to redeem</div>
+        </div>
+
+        <hr style="color:#f4a1bb;">
+
+        <h2 style="font-size:23px; color:#e76d96;">
+            Reasons Why I Love You 💗
+        </h2>
+
+        <div id="reasonContainer">
+            <div class="reason">Your smile makes me smile baby aam ruth nai ne plsss. ❤️</div>
+            <div class="reason">aje apde khali garden gaya ta to bhi ae bau special feel thayu mane soo you see tara sathe normal vastuo bhi special feel thay chee. 🥹</div>
+            <div class="reason">I love the way you make me feel loved. 💗</div>
+            <div class="reason">Bebu i want ke tu pachu mani jaay and mane vhaal kare pachu hehe. 🧸</div>
+            <div class="reason">Even when we fight, you're still my favourite person. 💕</div>
+        </div>
+
+        <button class="btn-love" onclick="nextReason()">
+            Tell me another reason 💌
+        </button>
+
+        <p id="reasonCount" class="small-text">Tap to discover a reason!</p>
+
+        <button class="btn-love mt-3" onclick="showPage(4)">
+            Next surprise ➜
+        </button>
+    </div>
+</section>
+
+
+<!-- PAGE 4: I LOVE YOU BACKGROUND -->
+<section class="page" id="page4">
+
+    <div class="love-background">
+        <div class="love-row"><span id="row1"></span></div>
+        <div class="love-row"><span id="row2"></span></div>
+        <div class="love-row"><span id="row3"></span></div>
+        <div class="love-row"><span id="row4"></span></div>
+    </div>
+
+    <div class="page-four-content">
+        <h1 class="heading" style="font-size:32px;">
+            Just in case you forgot...
+        </h1>
+
+        <h2 style="color:#e76d96; font-size:35px;">
+            I LOVE YOU! ❤️
+        </h2>
+
+        <p class="subtitle">
+            A thousand times, a million times,
+            and a million more.
+        </p>
+
+        <button class="btn-love" onclick="startFinalPage()">
+            One last surprise ❤️
+        </button>
+    </div>
+</section>
+
+
+<!-- PAGE 5: FORMING HEART -->
+<section class="page" id="page5"
+         style="background:linear-gradient(135deg,#fff0f5,#ffe0eb);">
+
+    <canvas id="heartCanvas"></canvas>
+
+    <div class="final-content">
+        <h1 class="heading">
+            A little heart, just for you...
+        </h1>
+
+        <div id="heartMessage">
+            <h2 style="color:#e94e83; font-size:26px;">
+                ❤️ You are special to me ❤️
+            </h2>
+
+            <p class="subtitle">
+                I hope you know how special you are to me.
+                I hope you know how much happiness you bring
+                into my life.
+
+                <br><br>
+
+                I may not always be perfect, and we may have
+                our little fights, but I never want you to
+                doubt how much I love you.
+
+                <br><br>
+
+                I hope I make you feel as loved, special and
+                appreciated as you truly deserve.
+
+                <br><br>
+
+                Thank you for being you.
+                <br>
+                I LOVE YOU SO MUCH! 💗
+
+		bebu jaanu tari dhyani ne avu avde che manavanu chalse tane? khush rai sakis mara sathe? idk online kai rite manau baby par i hope aaana thi kai pher pade bachu<3
+            </p>
+
+            <div style="font-size:30px;">💗 🥹 💗</div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+
+// PAGE NAVIGATION
+function showPage(number) {
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+
+    document.getElementById('page' + number).classList.add('active');
+    window.scrollTo(0, 0);
+}
+
+
+// NO BUTTON RUNNING AWAY
+let noCount = 0;
+
+const messages = [
+    "PLEASE CHOOSE YESSSS! 🥺",
+    "GIVE ME ONE CHANCE PLEASE! 😭",
+    "DON'T BREAK MY HEART! 💔",
+    "PRETTYYYY PLEASEEEEE! 🥹",
+    "JUST PRESS YESSSS! 💗",
+    "I PROMISE I'LL MAKE YOU SMILE!",
+    "WHY ARE YOU CHASING NOOO? 😭"
+];
+
+function runAway() {
+    const button = document.getElementById('noButton');
+    const question = document.getElementById('question');
+
+    noCount++;
+
+    question.innerText =
+        messages[(noCount - 1) % messages.length];
+
+    button.style.position = 'fixed';
+
+    const maxX = window.innerWidth - button.offsetWidth - 20;
+    const maxY = window.innerHeight - button.offsetHeight - 20;
+
+    const x = Math.max(10, Math.random() * maxX);
+    const y = Math.max(10, Math.random() * maxY);
+
+    button.style.left = x + 'px';
+    button.style.top = y + 'px';
+}
+
+function sayYes() {
+    showPage(2);
+}
+
+
+// LOVE COUPONS
+function redeem(element) {
+    element.classList.toggle('redeemed');
+
+    if(element.classList.contains('redeemed')) {
+        element.querySelector('.small-text').innerText =
+            'Redeemed! 🥰';
+    } else {
+        element.querySelector('.small-text').innerText =
+            'Tap to redeem';
+    }
+}
+
+
+// REASONS WHY I LOVE YOU
+let currentReason = 0;
+
+function nextReason() {
+    const reasons = document.querySelectorAll('.reason');
+
+    if(currentReason < reasons.length) {
+        reasons[currentReason].style.display = 'block';
+        currentReason++;
+    }
+
+    if(currentReason === reasons.length) {
+        document.getElementById('reasonCount').innerText =
+            "And there are a million more reasons! 💗";
+    } else {
+        document.getElementById('reasonCount').innerText =
+            currentReason + " of " + reasons.length + " reasons revealed 💕";
+    }
+}
+
+
+// FOUR ROWS OF I LOVE YOU TEXT
+const loveText =
+    ("I LOVE YOU  ♥  I LOVE YOU  ♥  I LOVE YOU  ♥  ").repeat(8);
+
+['row1','row2','row3','row4'].forEach(id => {
+    document.getElementById(id).innerText =
+        loveText + loveText;
+});
+
+
+// FINAL PAGE
+let animationStarted = false;
+
+function startFinalPage() {
+    showPage(5);
+
+    if(!animationStarted) {
+        animationStarted = true;
+        setTimeout(createHeart, 500);
+    }
+}
+
+
+// HEART FORMATION ANIMATION
+function createHeart() {
+    const canvas = document.getElementById('heartCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    let particles = [];
+
+    function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+
+    const centerX = width / 2;
+    const centerY = height * 0.43;
+    const scale = Math.min(width * 0.018, height * 0.014, 9);
+
+    // Heart-shaped target positions
+    const total = 700;
+
+    for(let i = 0; i < total; i++) {
+
+        let t = Math.PI * 2 * Math.random();
+
+        // Parametric heart shape
+        let x = 16 * Math.pow(Math.sin(t), 3);
+        let y = 13 * Math.cos(t)
+              - 5 * Math.cos(2*t)
+              - 2 * Math.cos(3*t)
+              - Math.cos(4*t);
+
+        // Fill the heart with particles
+        let fill = Math.sqrt(Math.random());
+
+        particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            targetX: centerX + x * scale * fill,
+            targetY: centerY - y * scale * fill,
+            size: Math.random() * 2.5 + 1,
+            delay: Math.random() * 100,
+            progress: 0
+        });
+    }
+
+    let frame = 0;
+
+    function animate() {
+        if(!document.getElementById('page5').classList.contains('active')) {
+            requestAnimationFrame(animate);
+            return;
+        }
+
+        ctx.clearRect(0, 0, width, height);
+        frame++;
+
+        particles.forEach(p => {
+            if(frame > p.delay) {
+                p.progress = Math.min(1, p.progress + 0.012);
+
+                let eased = 1 - Math.pow(1 - p.progress, 3);
+
+                p.drawX = p.x + (p.targetX - p.x) * eased;
+                p.drawY = p.y + (p.targetY - p.y) * eased;
+            }
+
+            let pulse = p.progress >= 1
+                ? 1 + Math.sin(frame * 0.035) * 0.06
+                : 1;
+
+            ctx.beginPath();
+            ctx.arc(
+                p.drawX ?? p.x,
+                p.drawY ?? p.y,
+                p.size * pulse,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle = 'rgba(239, 75, 125, 0.8)';
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = '#ff7ca5';
+            ctx.fill();
+        });
+
+        ctx.shadowBlur = 0;
+
+        if(frame > 190) {
+            document.getElementById('heartMessage')
+                .classList.add('show');
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+}
+
+</script>
+
+</body>
+</html>
